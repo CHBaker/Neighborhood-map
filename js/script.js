@@ -1,17 +1,15 @@
-$(function ({
+$(function () {
 
-var places = [
+	var places = [];
 
-];
+	var destination = function () {
 
-var destination = function () {
+	};
 
-};
+	var ViewModel = function () {
 
-var ViewModel = function () {
+	};
 
-};
+	ko.applyBindings(new ViewModel());
 
-ko.applyBindings(new ViewModel());
-
-}));
+});
