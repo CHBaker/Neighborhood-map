@@ -78,7 +78,7 @@ $(function () {
 
 	};
 
-    ko.bindingHandlers.googleMap = {
+    ko.bindingHandlers.map = {
 
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var mapObj = ko.utils.unwrapObservable(valueAccessor());
