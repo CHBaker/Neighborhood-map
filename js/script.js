@@ -1,6 +1,6 @@
-$(function () {
 
-	var places = [];
+
+	var locations = [];
 
     var mapstyle = [
             {
@@ -74,35 +74,22 @@ $(function () {
             }
         ];
 
+    var initMap = function () {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 38.907280, lng: -77.034488},
+          zoom: 13,
+          styles: mapstyle,
+          mapTypeControl: false
+        });
+    }
+
 	var destination = function () {
 
 	};
 
-    ko.bindingHandlers.map = {
-
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var mapObj = ko.utils.unwrapObservable(valueAccessor());
-            var latLng = new google.maps.LatLng(
-                ko.utils.unwrapObservable(mapObj.lat),
-                ko.utils.unwrapObservable(mapObj.lng));
-            var mapOptions = { center: latLng,
-                              zoom: 10, 
-                              styles: style,
-                              mapTypeControl: false };
-
-            mapObj.googleMap = new google.maps.Map(element, mapOptions);
-        }
-    };
-
-
 	var ViewModel = function () {
         var self = this;
-        self.mainMap = ko.observable({
-            lat: ko.observable(38.907280),
-            lng: ko.observable(77.034488)
-        });
     };
 
 	ko.applyBindings(new ViewModel());
 
-});
