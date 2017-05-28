@@ -22,85 +22,76 @@ var locations = [
 ];
 
 var mapstyle = [
-        {
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "color": "#e0efef"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "hue": "#1900ff"
-                },
-                {
-                    "color": "#c0e8e8"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "lightness": 100
-                },
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "transit.line",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "lightness": 700
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "color": "#7dcdcd"
-                }
-            ]
-        }
-    ];
-
-var initMap = function () {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 38.907280, lng: -77.034488},
-      zoom: 13,
-      styles: mapstyle,
-      mapTypeControl: false
-    });
-}
+    {
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#e0efef"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "hue": "#1900ff"
+            },
+            {
+                "color": "#c0e8e8"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "lightness": 100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 700
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#7dcdcd"
+            }
+        ]
+    }
+];
 
 var destination = function () {
 
@@ -108,6 +99,63 @@ var destination = function () {
 
 var ViewModel = function () {
     var self = this;
+
+    var markers = [];
+
+    function initMap () {
+    // create main map, google maps api
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 38.907280, lng: -77.034488},
+      zoom: 13,
+      styles: mapstyle,
+      mapTypeControl: false
+    });
+
+    makeMarkerIcon = function (markerColor) {
+        var markerImage = new google.maps.MarkerImage(
+            'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'
+            + markerColor 
+            + '|40|_|%E2%80%A2',
+            new google.maps.Size(21, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 34),
+            new google.maps.Size(21, 34));
+        return markerImage
+        };
+    };
+
+    // create marker icon styles
+    var defaultIcon = makeMarkerIcon('0091ff');
+    var highlightedIcon = makeMarkerIcon('FFFF24');
+
+    // show default locations with markers
+    for (var i = 0; i < locations.length; i++) {
+        // get each location from the array
+        var position = locations[i].location;
+        var title = locations[i].title;
+        // create marker, add to array
+        var marker = new google.maps.Marker({
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            icon: defaultIcon,
+            id: i
+        });
+
+        markers.push(marker);
+
+        marker.addListener('click', function() {
+            populateInfoWindow(self, largeInfowindow);
+        });
+        marker.addListener('mouseover', function() {
+            self.setIcon(highlightedIcon);
+        });
+        marker.addListener('mouseout', function() {
+            self.setIcon(defaultIcon);
+        });
+    };
 };
 
-ko.applyBindings(new ViewModel());
+function appInit () {
+    ko.applyBindings(new ViewModel());
+};
