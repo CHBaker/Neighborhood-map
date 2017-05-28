@@ -103,7 +103,7 @@ var mapstyle = [
     }
 ];
 
-var destination = function () {
+var destination = function (locations) {
     this.position = ko.observable(locations.location);
     this.title = ko.observable(locations.title);
     this.id = ko.observable(locations.id);
