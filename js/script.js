@@ -1,24 +1,34 @@
 var locations = [
     {title: 'US Holocaust Museum', 
-        location: {lat: 38.886925, lng: -77.032607}},
+        location: {lat: 38.886925, lng: -77.032607},
+        id: 1},
     {title: 'Smithsonian National Air and Space Museum',
-        location: {lat: 38.888344, lng: -77.019836}},
+        location: {lat: 38.888344, lng: -77.019836},
+        id: 2},
     {title: 'Smithsonian National Museum of Natural History',
-        location: {lat: 38.891433, lng: -77.026001}},
+        location: {lat: 38.891433, lng: -77.026001},
+        id: 3},
     {title: 'Library of Congress',
-        location: {lat: 38.888893, lng: -77.004698}},
+        location: {lat: 38.888893, lng: -77.004698},
+        id: 4},
     {title: 'Lincoln Memorial',
-        location: {lat: 38.889553, lng: -77.050144}},
+        location: {lat: 38.889553, lng: -77.050144},
+        id: 5},
     {title: 'The White House',
-        location: {lat: 38.897910, lng: -77.036617}},
+        location: {lat: 38.897910, lng: -77.036617},
+        id: 6},
     {title: 'Vietnam Veterans Memorial',
-        location: {lat: 38.891277, lng: -77.047670}},
+        location: {lat: 38.891277, lng: -77.047670},
+        id: 7},
     {title: 'United States Capitol',
-        location: {lat: 38.890248, lng: -77.009061}},
+        location: {lat: 38.890248, lng: -77.009061},
+        id: 8},
     {title: 'Newseum',
-        location: {lat: 38.893273, lng: -77.019274}},
+        location: {lat: 38.893273, lng: -77.019274},
+        id: 9},
     {title: 'Washington National Cathedral',
-        location: {lat: 38.930778, lng: -77.070716}}
+        location: {lat: 38.930778, lng: -77.070716},
+        id: 10}
 ];
 
 var mapstyle = [
@@ -94,15 +104,16 @@ var mapstyle = [
 ];
 
 var destination = function () {
-
+    this.position = ko.observable(locations.location);
+    this.title = ko.observable(locations.title);
+    this.id = ko.observable(locations.id);
 };
 
 var ViewModel = function () {
     var self = this;
 
-    var markers = [];
+    this.markers = ko.observableArray([]);
 
-    function initMap () {
     // create main map, google maps api
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 38.907280, lng: -77.034488},
@@ -121,7 +132,6 @@ var ViewModel = function () {
             new google.maps.Point(10, 34),
             new google.maps.Size(21, 34));
         return markerImage
-        };
     };
 
     // create marker icon styles
@@ -129,20 +139,16 @@ var ViewModel = function () {
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
     // show default locations with markers
-    for (var i = 0; i < locations.length; i++) {
-        // get each location from the array
-        var position = locations[i].location;
-        var title = locations[i].title;
-        // create marker, add to array
-        var marker = new google.maps.Marker({
-            position: position,
-            title: title,
+    locations.forEach(function (location) {
+        marker = new google.maps.Marker({
+            position: location.location,
+            title: location.title,
             animation: google.maps.Animation.DROP,
             icon: defaultIcon,
-            id: i
+            id: location
         });
 
-        markers.push(marker);
+        self.markers.push( new destination (marker));
 
         marker.addListener('click', function() {
             populateInfoWindow(self, largeInfowindow);
@@ -153,7 +159,7 @@ var ViewModel = function () {
         marker.addListener('mouseout', function() {
             self.setIcon(defaultIcon);
         });
-    };
+    });
 };
 
 function appInit () {
