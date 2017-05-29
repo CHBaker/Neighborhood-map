@@ -103,16 +103,48 @@ var mapstyle = [
     }
 ];
 
-var destination = function (locations) {
+var Place = function (locations) {
     this.position = ko.observable(locations.location);
     this.title = ko.observable(locations.title);
     this.id = ko.observable(locations.id);
+
+    this.marker = new google.maps.Marker({
+        position: this.position,
+        title: this.title,
+        animation: google.maps.Animation.DROP,
+        icon: this.defaultIcon,
+        id: this.id
+    });
+
+    this.makeMarkerIcon = function (markerColor) {
+        this.markerImage = new google.maps.MarkerImage(
+            'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'
+            + markerColor 
+            + '|40|_|%E2%80%A2',
+            new google.maps.Size(21, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 34),
+            new google.maps.Size(21, 34));
+        return this.markerImage
+    };
+
+    // marker.addListener('click', function() {
+    //     populateInfoWindow(self, largeInfowindow);
+    // });
+    // marker.addListener('mouseover', function() {
+    //     self.setIcon(highlightedIcon);
+    // });
+    // marker.addListener('mouseout', function() {
+    //     self.setIcon(defaultIcon);
+    // create marker icon styles
+    // this.defaultIcon = makeMarkerIcon('0091ff');
+    // this.highlightedIcon = makeMarkerIcon('FFFF24');
 };
 
 var ViewModel = function () {
     var self = this;
 
-    this.markers = ko.observableArray([]);
+    this.locationsList = ko.observableArray([]);
 
     // create main map, google maps api
     map = new google.maps.Map(document.getElementById('map'), {
@@ -122,43 +154,8 @@ var ViewModel = function () {
       mapTypeControl: false
     });
 
-    makeMarkerIcon = function (markerColor) {
-        var markerImage = new google.maps.MarkerImage(
-            'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'
-            + markerColor 
-            + '|40|_|%E2%80%A2',
-            new google.maps.Size(21, 34),
-            new google.maps.Point(0, 0),
-            new google.maps.Point(10, 34),
-            new google.maps.Size(21, 34));
-        return markerImage
-    };
-
-    // create marker icon styles
-    var defaultIcon = makeMarkerIcon('0091ff');
-    var highlightedIcon = makeMarkerIcon('FFFF24');
-
-    // show default locations with markers
     locations.forEach(function (location) {
-        marker = new google.maps.Marker({
-            position: location.location,
-            title: location.title,
-            animation: google.maps.Animation.DROP,
-            icon: defaultIcon,
-            id: location
-        });
-
-        self.markers.push( new destination (marker));
-
-        marker.addListener('click', function() {
-            populateInfoWindow(self, largeInfowindow);
-        });
-        marker.addListener('mouseover', function() {
-            self.setIcon(highlightedIcon);
-        });
-        marker.addListener('mouseout', function() {
-            self.setIcon(defaultIcon);
-        });
+        self.locationsList.push( new Place (location));
     });
 };
 
