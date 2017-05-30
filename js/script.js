@@ -145,7 +145,7 @@ var Place = function (locations) {
 var ViewModel = function () {
     var self = this;
 
-    this.locationsList = ko.observableArray([]);
+    self.locationsList = ko.observableArray([]);
 
     // create main map, google maps api
     map = new google.maps.Map(document.getElementById('map'), {
@@ -158,6 +158,8 @@ var ViewModel = function () {
     locations.forEach(function (location) {
         self.locationsList.push( new Place (location));
     });
+
+    console.log(self.locationsList());
 };
 
 function appInit () {
