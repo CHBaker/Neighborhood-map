@@ -108,10 +108,6 @@ var Place = function (locations) {
     title = locations.title;
     id = locations.id;
 
-    // create marker icon styles
-    defaultIcon = makeMarkerIcon('0091ff');
-    // this.highlightedIcon = makeMarkerIcon('FFFF24');
-
     makeMarkerIcon = function (markerColor) {
         markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'
@@ -123,6 +119,10 @@ var Place = function (locations) {
             new google.maps.Size(21, 34));
         return markerImage
     };
+
+    // create marker icon styles
+    defaultIcon = makeMarkerIcon('0091ff');
+    // highlightedIcon = makeMarkerIcon('FFFF24');
 
     this.marker = new google.maps.Marker({
         position: position,
