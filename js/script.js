@@ -104,12 +104,12 @@ var mapstyle = [
 ];
 
 var Place = function (locations) {
-    position = locations.location;
-    title = locations.title;
-    id = locations.id;
+    var position = locations.location;
+    var title = locations.title;
+    var id = locations.id;
 
     makeMarkerIcon = function (markerColor) {
-        markerImage = new google.maps.MarkerImage(
+        var markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'
             + markerColor 
             + '|40|_|%E2%80%A2',
@@ -117,29 +117,73 @@ var Place = function (locations) {
             new google.maps.Point(0, 0),
             new google.maps.Point(10, 34),
             new google.maps.Size(21, 34));
-        return markerImage
+        return markerImage;
     };
 
     // create marker icon styles
-    defaultIcon = makeMarkerIcon('0091ff');
-    // highlightedIcon = makeMarkerIcon('FFFF24');
+    var defaultIcon = makeMarkerIcon('0091ff');
+    var highlightedIcon = makeMarkerIcon('FFFF24');
 
     this.marker = new google.maps.Marker({
         position: position,
         title: title,
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
-        id: id
+        id: id,
+        map: map
     });
 
-    // marker.addListener('click', function() {
-    //     populateInfoWindow(self, largeInfowindow);
-    // });
-    // marker.addListener('mouseover', function() {
-    //     self.setIcon(highlightedIcon);
-    // });
-    // marker.addListener('mouseout', function() {
-    //     self.setIcon(defaultIcon);
+    var largeInfowindow = new google.maps.InfoWindow();
+
+    this.marker.addListener('click', function() {
+        populateInfoWindow(this, largeInfowindow);
+    });
+    this.marker.addListener('mouseover', function() {
+        this.setIcon(highlightedIcon);
+    });
+    this.marker.addListener('mouseout', function() {
+        this.setIcon(defaultIcon);
+    });
+
+    populateInfoWindow = function (marker, infowindow) {
+        // make sure infowindow is not open already
+        if (infowindow.marker != marker) {
+            infowindow.setContent('');
+            infowindow.marker = marker;
+            infowindow.addListener('closeclick', function () {
+                infowindow.marker = null;
+            });
+            var streetViewService = new google.maps.StreetViewService();
+            var radius = 50;
+            // if Status OK, comput position of street view image
+            getStreetView = function (data, status) {
+                if (status == google.maps.StreetViewStatus.OK) {
+                    var nearStreetViewLocation = data.location.latLng;
+                    var heading = google.maps.geometry.spherical.computeHeading(
+                        nearStreetViewLocation, marker.position);
+                    infowindow.setContent('<div>' + marker.title 
+                        + '</div><div id="pano"></div>');
+                    var panoramaOptions = {
+                        position: nearStreetViewLocation,
+                        pov: {
+                            heading: heading,
+                            pitch: 30
+                        }
+                    };
+                    var panorama = new google.maps.StreetViewPanorama(
+                        document.getElementById('pano'), panoramaOptions);
+                } else {
+                    infowindow.setContent('<div>' + marker.title
+                        + '</div><div>No Street View Found</div>');
+                };
+            };
+
+            // get the closest streetview image within 50 meters of marker
+            streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+            // Open infowindow on the selected marker
+            infowindow.open(map, marker);
+        };
+    };
 };
 
 var ViewModel = function () {
@@ -152,14 +196,12 @@ var ViewModel = function () {
       center: {lat: 38.907280, lng: -77.034488},
       zoom: 13,
       styles: mapstyle,
-      mapTypeControl: false
+      mapTypeControl: false,
     });
 
     locations.forEach(function (location) {
         self.locationsList.push( new Place (location));
     });
-
-    console.log(self.locationsList());
 };
 
 function appInit () {
