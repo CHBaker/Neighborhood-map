@@ -192,7 +192,7 @@ var Place = function (locations) {
 var ViewModel = function () {
     var self = this;
 
-    self.locationsList = ko.observableArray([]);
+    this.locationsList = ko.observableArray([]);
 
     // create main map, google maps api
     map = new google.maps.Map(document.getElementById('map'), {

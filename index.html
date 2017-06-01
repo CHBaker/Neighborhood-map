@@ -17,7 +17,15 @@
 
             <div class="heading">Sites to see</div>
 
-            <div id="list"></div>
+            <div id="list">
+                
+                <div data-bind="foreach: locationsList" class="places">
+
+                    <button data-bind="text: title" class="place"></button>
+
+                </div>
+
+            </div>
 
         </div>
 
