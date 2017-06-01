@@ -136,8 +136,11 @@ var Place = function (locations) {
     var largeInfowindow = new google.maps.InfoWindow();
 
     this.marker.addListener('click', function() {
-        populateInfoWindow(this, largeInfowindow);
+        populateInfoWindow(this, infoWindow);
     });
+    // this.marker.addListener('click', function() {
+    //     bounce();
+    // });
     this.marker.addListener('mouseover', function() {
         this.setIcon(highlightedIcon);
     });
@@ -193,7 +196,7 @@ var ViewModel = function () {
 
     // create main map, google maps api
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 38.907280, lng: -77.034488},
+      center: {lat: 38.905076, lng: -77.062898},
       zoom: 13,
       styles: mapstyle,
       mapTypeControl: false,
