@@ -29,6 +29,12 @@ html, body {
 	padding: 15px;
 }
 
+.places {
+	text-align: left;
+	width: 90%;
+	padding: 10%;
+}
+
 #pano {
     width: 200px;
     height: 200px;
