@@ -8,9 +8,33 @@ html, body {
 #map {
 	height: 100%;
 	width: 100%;
+	position: relative;
+}
+
+.container {
+	position: absolute;
+	border-radius: 10px;
+	height: 80%;
+	width: 25%;
+	background-color: rgba(169, 204, 227, .7);
+	z-index: 1;
+	left: 2%;
+	top: 5%;
+}
+
+.heading {
+	font-size: 1.6em;
+	color: #34495E;
+	text-align: center;
+	padding: 15px;
 }
 
 #pano {
     width: 200px;
     height: 200px;
+}
+
+.infowindow {
+	padding: 20px;
+	font-size: 1.4em;
 }
