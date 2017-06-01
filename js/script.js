@@ -105,7 +105,7 @@ var mapstyle = [
 
 var Place = function (locations) {
     var position = locations.location;
-    var title = locations.title;
+    this.title = ko.observable(locations.title);
     var id = locations.id;
 
     makeMarkerIcon = function (markerColor) {
@@ -126,14 +126,14 @@ var Place = function (locations) {
 
     this.marker = new google.maps.Marker({
         position: position,
-        title: title,
+        title: this.title(),
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
         id: id,
         map: map
     });
 
-    var largeInfowindow = new google.maps.InfoWindow();
+    var infoWindow = new google.maps.InfoWindow();
 
     this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
@@ -164,7 +164,7 @@ var Place = function (locations) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    infowindow.setContent('<div>' + marker.title 
+                    infowindow.setContent('<div>' + marker.title
                         + '</div><div id="pano"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
