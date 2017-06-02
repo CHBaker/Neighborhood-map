@@ -1,3 +1,5 @@
+var infoWindow;
+
 var locations = [
     {title: 'US Holocaust Museum', 
         location: {lat: 38.886925, lng: -77.032607},
@@ -133,8 +135,6 @@ var Place = function (locations) {
         map: map
     });
 
-    var infoWindow = new google.maps.InfoWindow();
-
     this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
     });
@@ -201,6 +201,8 @@ var ViewModel = function () {
       styles: mapstyle,
       mapTypeControl: false,
     });
+
+    infoWindow = new google.maps.InfoWindow();
 
     locations.forEach(function (location) {
         self.locationsList.push( new Place (location));
