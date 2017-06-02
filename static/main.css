@@ -26,7 +26,7 @@ html, body {
 	font-size: 1.6em;
 	color: #34495E;
 	text-align: center;
-	padding: 15px;
+	padding: 20px;
 }
 
 .places {
@@ -41,7 +41,7 @@ html, body {
 	margin-bottom: -3px;
 }
 
-.place:hover, {
+.place:hover {
 	text-decoration: underline;
 }
 
@@ -50,7 +50,20 @@ html, body {
     height: 200px;
 }
 
+#dropdown {
+	display: none;
+}
+
+.show {
+	display: block;
+}
 .infowindow {
 	padding: 20px;
 	font-size: 1.4em;
+}
+
+#menuIcon {
+	position: absolute;
+	left: 19px;
+	top: 19px;
 }
