@@ -35,6 +35,16 @@ html, body {
 	padding: 10%;
 }
 
+.place{
+	color: #34495E;
+	font-size: 1.1em;
+	margin-bottom: -3px;
+}
+
+.place:hover, {
+	text-decoration: underline;
+}
+
 #pano {
     width: 200px;
     height: 200px;
