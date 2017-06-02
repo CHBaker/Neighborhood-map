@@ -207,6 +207,12 @@ var ViewModel = function () {
     locations.forEach(function (location) {
         self.locationsList.push( new Place (location));
     });
+
+    this.showClass = ko.observable(false);
+
+    this.toggleMenu = function() {
+        this.showClass(!this.showClass());
+    };
 };
 
 function appInit () {
