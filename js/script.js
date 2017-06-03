@@ -198,10 +198,11 @@
 
         // create main map, google maps api
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 38.905076, lng: -77.062898},
-          zoom: 13,
-          styles: mapstyle,
-          mapTypeControl: false,
+            // center: {lat: 38.905076, lng: -77.062898},
+            center: {lat: 38.903540, lng: -77.036548},
+            zoom: 13,
+            styles: mapstyle,
+            mapTypeControl: false,
         });
 
         infoWindow = new google.maps.InfoWindow();
@@ -214,8 +215,12 @@
 
         this.toggleMenu = function () {
             this.showClass(!this.showClass());
+            if (this.showClass() === true) {
+                map.center = {lat: 38.905076, lng: -77.062898};
+            } else {
+                map.center = {lat: 38.903540, lng: -77.036548};
+            };
         };
-
         // slide down for menu
         // this.slideDown = function () {
         //     ("#dropdown").slideDown();
