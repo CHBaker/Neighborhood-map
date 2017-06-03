@@ -1,6 +1,4 @@
-var app = app || {};
-
-$(function () {
+// $(function () {
 
     var infoWindow;
 
@@ -217,11 +215,13 @@ $(function () {
         this.toggleMenu = function() {
             this.showClass(!this.showClass());
         };
+
+        // slide down for menu
     };
 
     appInit = function () {
         ko.applyBindings(new ViewModel());
     };
 
-    appInit();
-});
+    // appInit();
+// });

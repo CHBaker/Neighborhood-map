@@ -50,8 +50,12 @@ html, body {
     height: 200px;
 }
 
-.show.show {
+.hide {
 	display: none;
+}
+
+.hide.show {
+	display: block;
 }
 
 .infowindow {
@@ -63,5 +67,5 @@ html, body {
 	position: absolute;
 	left: 19px;
 	top: 19px;
-	pointer: cursor;
+	pointer: hand;
 }
