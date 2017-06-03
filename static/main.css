@@ -50,12 +50,8 @@ html, body {
     height: 200px;
 }
 
-#dropdown {
+.show.show {
 	display: none;
-}
-
-.show {
-	display: block;
 }
 
 .infowindow {
@@ -67,4 +63,5 @@ html, body {
 	position: absolute;
 	left: 19px;
 	top: 19px;
+	pointer: cursor;
 }
