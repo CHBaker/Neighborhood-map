@@ -212,16 +212,19 @@
 
         this.showClass = ko.observable(false);
 
-        this.toggleMenu = function() {
+        this.toggleMenu = function () {
             this.showClass(!this.showClass());
         };
 
         // slide down for menu
+        // this.slideDown = function () {
+        //     ("#dropdown").slideDown();
+        // }
     };
 
     appInit = function () {
         ko.applyBindings(new ViewModel());
     };
 
-    // appInit();
+//     appInit();
 // });

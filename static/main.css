@@ -14,9 +14,7 @@ html, body {
 .container {
 	position: absolute;
 	border-radius: 10px;
-	height: 80%;
-	width: 25%;
-	background-color: rgba(169, 204, 227, .7);
+	background-color: rgba(169, 204, 227, .8);
 	z-index: 1;
 	left: 2%;
 	top: 5%;
@@ -58,6 +56,7 @@ html, body {
 	display: block;
 }
 
+
 .infowindow {
 	padding: 20px;
 	font-size: 1.4em;
@@ -67,5 +66,5 @@ html, body {
 	position: absolute;
 	left: 19px;
 	top: 19px;
-	pointer: hand;
+	cursor: hand;
 }
