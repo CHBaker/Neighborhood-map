@@ -39,14 +39,45 @@ html, body {
 }
 
 .place{
+	cursor: pointer;
 	color: #318D8D;
 	font-size: 1.1em;
 	margin-bottom: -3px;
 }
 
 .place:hover {
-	text-decoration: underline;
+	color: #7DCDCD;
+	-webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
 }
+
+/*modified effect: underline courtesy of https://codepen.io/colloque/pen/bDgmx*/
+.place:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	display: inline-block;
+	height: 1em;
+	width: 100%;
+	color: #7DCDCD;
+	border-bottom: 1px solid;
+	margin-top: 10px;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale(0,1);
+	transform: scale(0,1);
+}
+
+.place:hover:after {
+	color: #7DCDCD;
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+/*end underline effect*/
 
 #pano {
     width: 200px;
@@ -68,7 +99,8 @@ html, body {
 }
 
 #menuIcon {
-	fill: #020202;
+	cursor: pointer;
+	fill: rgb(88, 88, 88);
 	position: absolute;
 	left: 19px;
 	top: 19px;
