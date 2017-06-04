@@ -11,7 +11,7 @@ html, body {
 	position: relative;
 }
 
-.container {
+#container {
 	position: absolute;
 	border-radius: 10px;
 	background-color: rgba(169, 204, 227, .8);
