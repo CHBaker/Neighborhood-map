@@ -123,8 +123,8 @@ var Place = function (locations) {
     };
 
     // create marker icon styles
-    var defaultIcon = makeMarkerIcon('0091ff');
-    var highlightedIcon = makeMarkerIcon('00FF92');
+    var defaultIcon = makeMarkerIcon('EBB851');
+    var highlightedIcon = makeMarkerIcon('FF7878');
 
     this.marker = new google.maps.Marker({
         position: position,
