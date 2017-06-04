@@ -124,7 +124,7 @@ var Place = function (locations) {
 
     // create marker icon styles
     var defaultIcon = makeMarkerIcon('0091ff');
-    var highlightedIcon = makeMarkerIcon('FFFF24');
+    var highlightedIcon = makeMarkerIcon('00FF92');
 
     this.marker = new google.maps.Marker({
         position: position,
@@ -137,6 +137,7 @@ var Place = function (locations) {
 
     this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
+        map.panTo(this.position);
         this.setAnimation(google.maps.Animation.BOUNCE);
         var marker = this;
         setTimeout(function () {
