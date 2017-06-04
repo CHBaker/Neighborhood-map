@@ -4,11 +4,6 @@ var infoWindow;
 $(function () {
     // slide down for menu
     $("#menuIcon").click(function () {
-        if ($("container").height() == "10%") {
-            $("#container").animate({height: "80%"});
-        } else {
-            $("#container").animate({height: "10%"});
-        };
         $("#dropdown").slideToggle(1000);
     });
 });
@@ -150,13 +145,16 @@ var Place = function (locations) {
 
     this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
-    });
-    // this.marker.addListener('click', function() {
-    //     bounce();
-    // });
+        this.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () {
+            this.setAnimation(null);
+        }, 750);
+    }, this);
+
     this.marker.addListener('mouseover', function() {
         this.setIcon(highlightedIcon);
     });
+
     this.marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
     });
@@ -227,9 +225,9 @@ var ViewModel = function () {
     this.toggleMenu = function () {
         this.showClass(!this.showClass());
         if (this.showClass() === true) {
-            map.setCenter({lat: 38.905076, lng: -77.062898});
+            map.panTo({lat: 38.905076, lng: -77.062898});
         } else {
-            map.setCenter({lat: 38.903540, lng: -77.036548});
+            map.panTo({lat: 38.903540, lng: -77.036548});
         };
     };
 };
