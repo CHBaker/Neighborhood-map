@@ -5,6 +5,7 @@ $(function () {
     // slide down for menu
     $("#menuIcon").click(function () {
         $("#dropdown").slideToggle(1000);
+        $("#menuIcon").toggleClass("rotate");
     });
 });
 
@@ -230,7 +231,7 @@ var ViewModel = function () {
             map.panTo({lat: 38.903540, lng: -77.036548});
         };
     };
-    
+
     this.populateInfoWindow = function (marker, infowindow) {
         // make sure infowindow is not open already
         if (infowindow.marker != marker) {
