@@ -68,3 +68,9 @@ html, body {
 	top: 19px;
 	cursor: hand;
 }
+
+.rotate {
+	-ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
