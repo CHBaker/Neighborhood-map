@@ -18,6 +18,11 @@ html, body {
 	z-index: 1;
 	left: 2%;
 	top: 5%;
+	overflow: hidden;
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 .heading {
@@ -67,9 +72,17 @@ html, body {
 	left: 19px;
 	top: 19px;
 	cursor: hand;
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 .rotate {
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
 	-ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
