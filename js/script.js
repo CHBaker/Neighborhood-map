@@ -1,14 +1,5 @@
 var infoWindow;
 
-// animations with Jquery
-$(function () {
-    // slide down for menu
-    $("#menuIcon").click(function () {
-        $("#dropdown").slideToggle(1000);
-        $("#menuIcon").toggleClass("rotate");
-    });
-});
-
 var locations = [
     {title: 'US Holocaust Museum', 
         location: {lat: 38.886925, lng: -77.032607},
@@ -146,10 +137,11 @@ var Place = function (locations) {
 
     this.marker.addListener('click', function() {
         populateInfoWindow(this, infoWindow);
-        // setAnimation(google.maps.Animation.BOUNCE);
-        // setTimeout(function () {
-        //     this.setAnimation(null);
-        // }, 750);
+        this.setAnimation(google.maps.Animation.BOUNCE);
+        var marker = this;
+        setTimeout(function () {
+            marker.setAnimation(null);
+        }, 750);
     }, this);
 
     this.marker.addListener('mouseover', function() {
@@ -276,3 +268,16 @@ var ViewModel = function () {
 appInit = function () {
     ko.applyBindings(new ViewModel());
 };
+
+// animations with Jquery
+$(function () {
+    // slide down for menu
+    $("#menuIcon").click(function () {
+        $("#menuIcon").toggleClass("rotate", 1000);
+        if($("#container").css("height") === "70px") {
+            $("#dropdown").fadeIn(1000).slideDown(1000);
+        } else if ($("#container").css("height") === "550px") {
+            $("#dropdown").fadeOut(500).slideUp(500);
+        };
+    });
+});
