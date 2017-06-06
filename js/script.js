@@ -214,10 +214,12 @@ var ViewModel = function () {
 
     infoWindow = new google.maps.InfoWindow();
 
+    // push locations to observable array
     locations.forEach(function (location) {
         self.locationsList.push( new Place (location));
     });
 
+    // show and hide menu
     this.showClass = ko.observable(false);
 
     this.toggleMenu = function () {
@@ -229,9 +231,14 @@ var ViewModel = function () {
         };
     };
 
+    // trigger marker click, when list item is clicked
     this.triggerMarker = function (place) {
         google.maps.event.trigger(place.marker, 'click');
     };
+
+    // filter functionality, set blank
+    this.filter = ko.observable("");
+    console.log(this.filter());
 };
 
 appInit = function () {
