@@ -32,6 +32,13 @@ html, body {
 	padding: 20px;
 }
 
+#filter {
+	font-size: 1.4em;
+	color: #318D8D;
+	text-align: center;
+	padding-top: 10px;
+}
+
 .places {
 	text-align: left;
 	width: 90%;
