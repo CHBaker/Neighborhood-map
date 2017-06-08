@@ -236,9 +236,14 @@ var ViewModel = function () {
         google.maps.event.trigger(place.marker, 'click');
     };
 
-    // filter functionality, set blank
+    // filter functionality, var set blank
     this.filter = ko.observable("");
-    console.log(this.filter());
+
+    this.filterList = ko.computed(function () {
+        var mathes = this.locationsList.filter(function (item) {
+            return item.indexOf(filter) >= 0;
+        });
+    }, this);
 };
 
 appInit = function () {
