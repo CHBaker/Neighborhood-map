@@ -214,9 +214,20 @@ var ViewModel = function () {
 
     infoWindow = new google.maps.InfoWindow();
 
+    // filter functionality, var set blank
+    this.filter = ko.observable("");
+
+    this.filterList = ko.computed(function () {
+        var matches = locations.filter(function (item) {
+            return item.title.indexOf(self.filter()) >= 0;
+        });
+
+        return matches;
+    }, this);
+
     // push locations to observable array
-    locations.forEach(function (location) {
-        self.locationsList.push( new Place (location));
+    this.filterList().forEach(function (location) {
+        self.locationsList().push( new Place (location));
     });
 
     // show and hide menu
@@ -235,15 +246,6 @@ var ViewModel = function () {
     this.triggerMarker = function (place) {
         google.maps.event.trigger(place.marker, 'click');
     };
-
-    // filter functionality, var set blank
-    this.filter = ko.observable("");
-
-    this.filterList = ko.computed(function () {
-        var mathes = this.locationsList.filter(function (item) {
-            return item.indexOf(filter) >= 0;
-        });
-    }, this);
 };
 
 appInit = function () {
