@@ -219,16 +219,16 @@ var ViewModel = function () {
 
     this.filterList = ko.computed(function () {
         var matches = locations.filter(function (item) {
-            return item.title.indexOf(self.filter()) >= 0;
+            return item.title.toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
         });
-
-        return matches;
-    }, this);
+        return matches
+    });
 
     // push locations to observable array
     this.filterList().forEach(function (location) {
         self.locationsList().push( new Place (location));
     });
+
 
     // show and hide menu
     this.showClass = ko.observable(false);
