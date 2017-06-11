@@ -132,7 +132,8 @@ var Place = function (locations) {
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
         id: id,
-        map: map
+        map: map,
+        visible: true
     });
 
     this.marker.addListener('click', function() {
@@ -216,7 +217,7 @@ var ViewModel = function () {
 
     // push locations to observable array
     locations.forEach(function (location) {
-        locationsList().push( new Place (location));
+        self.locationsList().push( new Place (location));
     });
 
     // filter functionality, var set blank
@@ -224,9 +225,14 @@ var ViewModel = function () {
 
     this.filterList = ko.computed(function () {
         var matches = self.locationsList().filter(function (item) {
+            if (!item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0) {
+                item.marker.setVisible(false);
+            } else {
+                item.marker.setVisible(true);
+            };
             return item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
         });
-        item.marker.setVisible(true);
+        
         return matches
     });
 
