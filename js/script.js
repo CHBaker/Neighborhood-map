@@ -225,10 +225,10 @@ var ViewModel = function () {
 
     this.filterList = ko.computed(function () {
         var matches = self.locationsList().filter(function (item) {
-            if (!item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0) {
-                item.marker.setVisible(false);
-            } else {
+            if (item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0) {
                 item.marker.setVisible(true);
+            } else {
+                item.marker.setVisible(false);
             };
             return item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
         });
