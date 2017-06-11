@@ -214,21 +214,21 @@ var ViewModel = function () {
 
     infoWindow = new google.maps.InfoWindow();
 
+    // push locations to observable array
+    locations.forEach(function (location) {
+        locationsList().push( new Place (location));
+    });
+
     // filter functionality, var set blank
     this.filter = ko.observable("");
 
     this.filterList = ko.computed(function () {
-        var matches = locations.filter(function (item) {
-            return item.title.toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
+        var matches = self.locationsList().filter(function (item) {
+            return item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
         });
+        item.marker.setVisible(true);
         return matches
     });
-
-    // push locations to observable array
-    this.filterList().forEach(function (location) {
-        self.locationsList().push( new Place (location));
-    });
-
 
     // show and hide menu
     this.showClass = ko.observable(false);
