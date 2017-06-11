@@ -245,6 +245,7 @@ var ViewModel = function () {
             map.panTo({lat: 38.905076, lng: -77.062898});
         } else {
             map.panTo({lat: 38.903540, lng: -77.036548});
+            self.filter("");
         };
     };
 
