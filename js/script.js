@@ -266,8 +266,10 @@ $(function () {
         $("#menuIcon").toggleClass("rotate", 1000);
         if($("#container").css("height") === "70px") {
             $("#dropdown").fadeIn(1000).slideDown(1000);
-        } else if ($("#container").css("height") === "550px") {
+            $("#wiki-container").animate({left: "45px"});
+        } else if ($("#container").css("height") === "500px") {
             $("#dropdown").fadeOut(500).slideUp(500);
+            $("#wiki-container").animate({left: "-500px"});
         };
     });
 });

@@ -16,8 +16,8 @@ html, body {
 	border-radius: 40px;
 	background-color: rgba(226, 250, 250, .8);
 	z-index: 1;
-	left: 2%;
-	top: 5%;
+	left: 45px;
+	top: 45px;
 	overflow: hidden;
 	-webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
@@ -126,4 +126,20 @@ html, body {
 	-ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+#wiki-container {
+	position: absolute;
+	border-radius: 40px;
+	background-color: rgba(226, 250, 250, .8);
+	z-index: 1;
+	left: -500px;
+	top: 600px;
+	height: 100px;
+	width: 350px;
+	overflow: hidden;
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
 }
