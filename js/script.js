@@ -225,10 +225,10 @@ var ViewModel = function () {
 
     this.filterList = ko.computed(function () {
         var matches = self.locationsList().filter(function (item) {
-            if (!item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0) {
-                item.marker.setVisible(false);
-            } else {
+            if (item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0) {
                 item.marker.setVisible(true);
+            } else {
+                item.marker.setVisible(false);
             };
             return item.title().toLowerCase().indexOf(self.filter().toLowerCase()) >= 0;
         });
@@ -266,7 +266,7 @@ $(function () {
         $("#menuIcon").toggleClass("rotate", 1000);
         if($("#container").css("height") === "70px") {
             $("#dropdown").fadeIn(1000).slideDown(1000);
-        } else if ($("#container").css("height") === "500px") {
+        } else if ($("#container").css("height") === "550px") {
             $("#dropdown").fadeOut(500).slideUp(500);
         };
     });
