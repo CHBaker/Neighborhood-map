@@ -128,7 +128,7 @@ html, body {
     transform: rotate(45deg);
 }
 
-#wiki-container {
+/*#wiki-container {
 	position: absolute;
 	border-radius: 40px;
 	background-color: rgba(226, 250, 250, .8);
@@ -142,4 +142,4 @@ html, body {
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     transition: all 1s ease;
-}
+}*/
