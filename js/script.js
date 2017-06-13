@@ -174,7 +174,7 @@ var Place = function (locations) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    infowindow.setContent('<div>' + marker.title
+                    infowindow.setContent('<div id="m-title">' + marker.title
                         + '</div><div id="pano"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
