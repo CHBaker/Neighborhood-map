@@ -89,6 +89,7 @@ html, body {
 #pano {
     width: 200px;
     height: 200px;
+    margin: 0 auto;
 }
 
 .hide {
@@ -128,18 +129,24 @@ html, body {
     transform: rotate(45deg);
 }
 
-/*#wiki-container {
+#wiki-container {
 	position: absolute;
 	border-radius: 40px;
 	background-color: rgba(226, 250, 250, .8);
 	z-index: 1;
-	left: -500px;
-	top: 600px;
-	height: 100px;
+	left: 885px;
+	top: 45px;
+	height: 550px;
 	width: 350px;
 	overflow: hidden;
 	-webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     transition: all 1s ease;
-}*/
+}
+
+#m-title {
+	text-align: center;
+	padding: 10px;
+	font-size: 20px;
+}
