@@ -168,7 +168,7 @@ var Place = function (locations) {
 
                 for (var i = 0; i < articleList.length; i++) {
                     articleStr = articleList[i];
-                    var url = 'http//:en.wikipedia.org/wiki/' + articleStr;
+                    var url = 'https://en.wikipedia.org/wiki/' + articleStr;
                     $wikiElem.append('<li><a target="_blank" href="' + url + '">'
                                      + articleStr + '</a></li>');
 
@@ -209,7 +209,9 @@ var Place = function (locations) {
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
                     infowindow.setContent('<div id="m-title">' + marker.title
-                        + '</div><div id="pano"></div>');
+                        + '</div>' + '<div id="wiki-a" data-bind="click: toggleWiki">' 
+                        + 'Wikipedia Articles</div>'
+                        + '<div id="pano"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
@@ -281,6 +283,13 @@ var ViewModel = function () {
             map.panTo({lat: 38.903540, lng: -77.036548});
             self.filter("");
         };
+    };
+
+    // show and hide wiki article container
+    this.showWiki = ko.observable(false);
+
+    this.toggleWiki = function () {
+        this.showWiki(!this.showWiki());
     };
 
     // trigger marker click, when list item is clicked

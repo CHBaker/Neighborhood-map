@@ -129,6 +129,14 @@ html, body {
     transform: rotate(45deg);
 }
 
+.hideWikiBox {
+	display: none;
+}
+
+.hideWikiBox.showWikiBox {
+	display: block;
+}
+
 #wiki-container {
 	position: absolute;
 	border-radius: 40px;
@@ -149,4 +157,10 @@ html, body {
 	text-align: center;
 	padding: 10px;
 	font-size: 20px;
+}
+
+#wiki-a {
+	cursor: pointer;
+	text-align: center;
+	font-size: 18px;
 }
