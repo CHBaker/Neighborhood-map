@@ -140,10 +140,44 @@ var Place = function (locations) {
         populateInfoWindow(this, infoWindow);
         map.panTo(this.position);
         this.setAnimation(google.maps.Animation.BOUNCE);
+
         var marker = this;
+
         setTimeout(function () {
             marker.setAnimation(null);
         }, 750);
+
+        // load wikipedia articles
+        var $wikiElem = $('#wiki-links');
+        $wikiElem.text("");
+
+        var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
+                       + marker.title 
+                       + "&format=json&callback=wikiCallback");
+
+        var wikiRequestTimeout = setTimeout(function() {
+            $wikiElem.text("failed to get wikipedia resources");
+        }, 8000);
+
+        $.ajax({
+            url: wikiURL,
+            dataType: 'jsonp',
+            // jsonp: 'callback'
+            success: function( response ) {
+                var articleList = response[1];
+
+                for (var i = 0; i < articleList.length; i++) {
+                    articleStr = articleList[i];
+                    var url = 'http//:en.wikipedia.org/wiki/' + articleStr;
+                    $wikiElem.append('<li><a target="_blank" href="' + url + '">'
+                                     + articleStr + '</a></li>');
+
+                };
+
+                clearTimeout(wikiRequestTimeout);
+            }
+        });
+
     }, this);
 
     this.marker.addListener('mouseover', function() {
