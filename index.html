@@ -55,6 +55,24 @@
 
         </div>
 
+        <div id="info-template" style="display: none">
+
+            <div data-bind="with: currentLocation">
+
+                <div id="m-title" data-bind="text: title"></div>
+
+            </div>
+
+            <div id="wiki-a" data-bind="click: toggleWiki">
+
+                Wikipedia Articles
+
+            </div>
+
+            <div id="pano"></div>
+
+        </div>
+
         <!-- google maps api -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDn2hH0rhRKwoo2SMnWnp5egjVcqrNMeSg&v=3&callback=appInit">
         </script>

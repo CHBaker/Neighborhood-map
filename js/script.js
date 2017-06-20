@@ -106,6 +106,7 @@ var mapstyle = [
 ];
 
 var Place = function (locations) {
+    var self = this;
     var position = locations.location;
     this.title = ko.observable(locations.title);
     var id = locations.id;
@@ -146,6 +147,9 @@ var Place = function (locations) {
         setTimeout(function () {
             marker.setAnimation(null);
         }, 750);
+
+        // update current location
+        self.currentLocation(marker);
 
         // load wikipedia articles
         var $wikiElem = $('#wiki-links');
@@ -208,10 +212,7 @@ var Place = function (locations) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    infowindow.setContent('<div id="m-title">' + marker.title
-                        + '</div>' + '<div id="wiki-a" data-bind="click: toggleWiki">' 
-                        + 'Wikipedia Articles</div>'
-                        + '<div id="pano"></div>');
+                    infowindow.setContent(document.getElementById('info-template'));
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
@@ -255,6 +256,9 @@ var ViewModel = function () {
     locations.forEach(function (location) {
         self.locationsList().push( new Place (location));
     });
+
+    // current location
+    self.currentLocation = ko.observable(this.locationsList()[0]);
 
     // filter functionality, var set blank
     this.filter = ko.observable("");
