@@ -105,7 +105,7 @@ var mapstyle = [
     }
 ];
 
-var Place = function (locations) {
+var Place = function (locations, vm) {
     var self = this;
     var position = locations.location;
     this.title = ko.observable(locations.title);
@@ -149,7 +149,7 @@ var Place = function (locations) {
         }, 750);
 
         // update current location
-        self.currentLocation(marker);
+        vm.currentLocation(marker);
 
         // load wikipedia articles
         var $wikiElem = $('#wiki-links');
@@ -212,7 +212,9 @@ var Place = function (locations) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    infowindow.setContent(document.getElementById('info-template'));
+                    var template = document.getElementById('info-template');
+                    template.style.display = "block";
+                    infowindow.setContent(template);
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
@@ -254,7 +256,7 @@ var ViewModel = function () {
 
     // push locations to observable array
     locations.forEach(function (location) {
-        self.locationsList().push( new Place (location));
+        self.locationsList().push( new Place (location, self));
     });
 
     // current location
