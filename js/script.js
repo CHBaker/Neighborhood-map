@@ -212,9 +212,8 @@ var Place = function (locations, vm) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    var template = document.getElementById('info-template');
-                    template.style.display = "block";
-                    infowindow.setContent(template);
+                    infowindow.setContent('<div id="info-window" data-bind="template:' + 
+                        '{ name: \'info-template\'}"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
