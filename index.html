@@ -45,7 +45,9 @@
 
         <div id="map"></div>
 
-        <div id="wiki-container" class="hideWikiBox" data-bind="css: { showWikiBox: showWiki }">
+        <!-- class="hideWikiBox" data-bind="css: { showWikiBox: showWiki }" -->
+
+        <div id="wiki-container">
 
             <h2>Wikipedia Articles</h2>
             
@@ -55,7 +57,7 @@
 
         </div>
 
-        <div id="info-template" style="display: none">
+        <script type="text/html" id="info-template">
 
             <div data-bind="with: currentLocation">
 
@@ -71,7 +73,7 @@
 
             <div id="pano"></div>
 
-        </div>
+        </script>
 
         <!-- google maps api -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDn2hH0rhRKwoo2SMnWnp5egjVcqrNMeSg&v=3&callback=appInit">

@@ -212,9 +212,8 @@ var Place = function (locations, vm) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    var template = document.getElementById('info-template');
-                    template.style.display = "block";
-                    infowindow.setContent(template);
+                    infowindow.setContent('<div id="info-window" data-bind="template:' + 
+                        '{ name: \'info-template\'}"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
@@ -291,12 +290,12 @@ var ViewModel = function () {
         };
     };
 
-    // show and hide wiki article container
-    this.showWiki = ko.observable(false);
+    // // show and hide wiki article container
+    // this.showWiki = ko.observable(false);
 
-    this.toggleWiki = function () {
-        this.showWiki(!this.showWiki());
-    };
+    // this.toggleWiki = function () {
+    //     this.showWiki(!this.showWiki());
+    // };
 
     // trigger marker click, when list item is clicked
     this.triggerMarker = function (place) {
