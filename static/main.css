@@ -141,33 +141,19 @@ html, body {
 }
 
 #wiki-container {
-	position: fixed;
-	display: table;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	transform: scale(0);
+	position: absolute;
+	border-radius: 40px;
+	background-color: rgba(226, 250, 250, .8);
 	z-index: 1;
-	&.one {
-	    transform: scaleY(.01) scaleX(0);
-	    animation: unfoldIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
-	    .modal-background {
-			.modal {
-			    transform: scale(0);
-			    animation: zoomIn .5s .8s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
-			}
-		}
-    }
-    &.out {
-		transform: scale(1);
-		animation: unfoldOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
-		.modal-background {
-	        .modal {
-				animation: zoomOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
-			}
-		}
-	}
+	left: 885px;
+	top: 45px;
+	height: 550px;
+	width: 350px;
+	overflow: hidden;
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 #m-title {
