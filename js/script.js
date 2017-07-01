@@ -212,8 +212,6 @@ var Place = function (locations, vm) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
-                    infowindow.setContent('<div id="info-window" data-bind="template:' + 
-                        '{ name: \'info-template\'}"></div>');
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
                         pov: {
@@ -251,7 +249,21 @@ var ViewModel = function () {
         mapTypeControl: false,
     });
 
-    infoWindow = new google.maps.InfoWindow();
+    var infoWindowHtml = '<div id="info-window" data-bind="template:' + 
+                        '{ name: \'info-template\'}"></div>';
+
+    self.infoWindow = new google.maps.InfoWindow({
+        content: infoWindowHtml
+    });
+
+    var infoWindowLoaded = false;
+
+    google.maps.event.addListener(self.infoWindow, 'domready', function () {
+        if (!infoWindowLoaded) {
+            ko.applyBindings(self, getElementById('infowindow')[0]);
+            infoWindowLoaded = true;
+        }
+    });
 
     // push locations to observable array
     locations.forEach(function (location) {
