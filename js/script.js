@@ -105,6 +105,39 @@ var mapstyle = [
     }
 ];
 
+// Wikipedia articles function
+var GetWiki = function (name, query) {
+    var $wikiElem = document.getElementById('#wiki-links');
+    $wikiElem.text("");
+    var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
+                       + query 
+                       + "&format=json&callback=wikiCallback");
+
+    var wikiRequestTimeout = setTimeout(function() {
+        $wikiElem.text("failed to get wikipedia resources");
+    }, 8000);
+
+    $.ajax({
+        url: wikiURL,
+        dataType: 'jsonp',
+        // jsonp: 'callback'
+        success: function( response ) {
+            var articleList = response[1];
+
+            for (var i = 0; i < articleList.length; i++) {
+                articleStr = articleList[i];
+                var url = 'https://en.wikipedia.org/wiki/' + articleStr;
+                $wikiElem.append('<li><a target="_blank" href="' + url + '">'
+                                 + articleStr + '</a></li>');
+
+            };
+
+            clearTimeout(wikiRequestTimeout);
+        }
+    });
+}
+
+// model
 var Place = function (locations, vm) {
     var self = this;
     var position = locations.location;
@@ -138,7 +171,7 @@ var Place = function (locations, vm) {
     });
 
     this.marker.addListener('click', function() {
-        populateInfoWindow(this, infoWindow);
+        // populateInfoWindow(this, infoWindow);
         map.panTo(this.position);
         this.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -150,38 +183,6 @@ var Place = function (locations, vm) {
 
         // update current location
         vm.currentLocation(marker);
-
-        // load wikipedia articles
-        var $wikiElem = $('#wiki-links');
-        $wikiElem.text("");
-
-        var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
-                       + marker.title 
-                       + "&format=json&callback=wikiCallback");
-
-        var wikiRequestTimeout = setTimeout(function() {
-            $wikiElem.text("failed to get wikipedia resources");
-        }, 8000);
-
-        $.ajax({
-            url: wikiURL,
-            dataType: 'jsonp',
-            // jsonp: 'callback'
-            success: function( response ) {
-                var articleList = response[1];
-
-                for (var i = 0; i < articleList.length; i++) {
-                    articleStr = articleList[i];
-                    var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-                    $wikiElem.append('<li><a target="_blank" href="' + url + '">'
-                                     + articleStr + '</a></li>');
-
-                };
-
-                clearTimeout(wikiRequestTimeout);
-            }
-        });
-
     }, this);
 
     this.marker.addListener('mouseover', function() {
@@ -196,43 +197,43 @@ var Place = function (locations, vm) {
         infoWindow.close();
     });
 
-    populateInfoWindow = function (marker, infowindow) {
-        // make sure infowindow is not open already
-        if (infowindow.marker != marker) {
-            infowindow.setContent('');
-            infowindow.marker = marker;
-            infowindow.addListener('closeclick', function () {
-                infowindow.marker = null;
-            });
-            var streetViewService = new google.maps.StreetViewService();
-            var radius = 50;
-            // if Status OK, comput position of street view image
-            getStreetView = function (data, status) {
-                if (status == google.maps.StreetViewStatus.OK) {
-                    var nearStreetViewLocation = data.location.latLng;
-                    var heading = google.maps.geometry.spherical.computeHeading(
-                        nearStreetViewLocation, marker.position);
-                    var panoramaOptions = {
-                        position: nearStreetViewLocation,
-                        pov: {
-                            heading: heading,
-                            pitch: 30
-                        }
-                    };
-                    var panorama = new google.maps.StreetViewPanorama(
-                        document.getElementById('pano'), panoramaOptions);
-                } else {
-                    infowindow.setContent('<div>' + marker.title
-                        + '</div><div>No Street View Found</div>');
-                };
-            };
+    // populateInfoWindow = function (marker, infowindow) {
+    //     // make sure infowindow is not open already
+    //     if (infowindow.marker != marker) {
+    //         infowindow.setContent('');
+    //         infowindow.marker = marker;
+    //         infowindow.addListener('closeclick', function () {
+    //             infowindow.marker = null;
+    //         });
+    //         var streetViewService = new google.maps.StreetViewService();
+    //         var radius = 50;
+    //         // if Status OK, comput position of street view image
+    //         getStreetView = function (data, status) {
+    //             if (status == google.maps.StreetViewStatus.OK) {
+    //                 var nearStreetViewLocation = data.location.latLng;
+    //                 var heading = google.maps.geometry.spherical.computeHeading(
+    //                     nearStreetViewLocation, marker.position);
+    //                 var panoramaOptions = {
+    //                     position: nearStreetViewLocation,
+    //                     pov: {
+    //                         heading: heading,
+    //                         pitch: 30
+    //                     }
+    //                 };
+    //                 var panorama = new google.maps.StreetViewPanorama(
+    //                     document.getElementById('pano'), panoramaOptions);
+    //             } else {
+    //                 infowindow.setContent('<div>' + marker.title
+    //                     + '</div><div>No Street View Found</div>');
+    //             };
+    //         };
 
-            // get the closest streetview image within 50 meters of marker
-            streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-            // Open infowindow on the selected marker
-            infowindow.open(map, marker);
-        };
-    };
+    //         // get the closest streetview image within 50 meters of marker
+    //         streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    //         // Open infowindow on the selected marker
+    //         infowindow.open(map, marker);
+    //     };
+    // };
 };
 
 var ViewModel = function () {
@@ -249,21 +250,23 @@ var ViewModel = function () {
         mapTypeControl: false,
     });
 
-    var infoWindowHtml = '<div id="info-window" data-bind="template:' + 
-                        '{ name: \'info-template\'}"></div>';
+    infoWindowInitialize = function () {
+        var infoWindowHtml = '<div id="info-window" data-bind="template:' + 
+                         '{ name: \'info-template\'}"></div>';
 
-    self.infoWindow = new google.maps.InfoWindow({
-        content: infoWindowHtml
-    });
+        self.infoWindow = new google.maps.InfoWindow({
+            content: infoWindowHtml
+        });
 
-    var infoWindowLoaded = false;
+        var infoWindowLoaded = false;
 
-    google.maps.event.addListener(self.infoWindow, 'domready', function () {
-        if (!infoWindowLoaded) {
-            ko.applyBindings(self, getElementById('infowindow')[0]);
-            infoWindowLoaded = true;
-        }
-    });
+        google.maps.event.addListener(self.infoWindow, 'domready', function () {
+            if (!infoWindowLoaded) {
+                ko.applyBindings(self, document.getElementById('info-template')[0]);
+                infoWindowLoaded = true;
+            }
+        });
+    }
 
     // push locations to observable array
     locations.forEach(function (location) {
