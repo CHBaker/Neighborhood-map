@@ -307,8 +307,7 @@ var ViewModel = function () {
     this.showWiki = ko.observable(false);
 
     this.toggleWiki = function () {
-        // this.showWiki(!this.showWiki());
-        console.log('wiki!' + self.currentLocation().title);
+        this.showWiki(!this.showWiki());
     };
 
     // trigger marker click, when list item is clicked
