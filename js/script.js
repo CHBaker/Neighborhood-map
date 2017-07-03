@@ -171,7 +171,7 @@ var Place = function (locations, vm) {
     });
 
     this.marker.addListener('click', function() {
-        // populateInfoWindow(this, infoWindow);
+        populateInfoWindow(this, infoWindow);
         map.panTo(this.position);
         this.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -197,7 +197,7 @@ var Place = function (locations, vm) {
         infoWindow.close();
     });
 
-    // populateInfoWindow = function (marker, infowindow) {
+    populateInfoWindow = function (marker, infowindow) {
     //     // make sure infowindow is not open already
     //     if (infowindow.marker != marker) {
     //         infowindow.setContent('');
@@ -231,9 +231,9 @@ var Place = function (locations, vm) {
     //         // get the closest streetview image within 50 meters of marker
     //         streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
     //         // Open infowindow on the selected marker
-    //         infowindow.open(map, marker);
+             infowindow.open(map, marker);
     //     };
-    // };
+    };
 };
 
 var ViewModel = function () {
@@ -254,19 +254,21 @@ var ViewModel = function () {
         var infoWindowHtml = '<div id="info-window" data-bind="template:' + 
                          '{ name: \'info-template\'}"></div>';
 
-        self.infoWindow = new google.maps.InfoWindow({
+        infoWindow = new google.maps.InfoWindow({
             content: infoWindowHtml
         });
 
         var infoWindowLoaded = false;
 
-        google.maps.event.addListener(self.infoWindow, 'domready', function () {
+        google.maps.event.addListener(infoWindow, 'domready', function () {
             if (!infoWindowLoaded) {
                 ko.applyBindings(self, document.getElementById('info-template')[0]);
                 infoWindowLoaded = true;
             }
         });
     }
+
+    infoWindowInitialize();
 
     // push locations to observable array
     locations.forEach(function (location) {
