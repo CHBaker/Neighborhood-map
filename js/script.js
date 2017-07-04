@@ -106,15 +106,15 @@ var mapstyle = [
 ];
 
 // Wikipedia articles function
-var GetWiki = function (name, query) {
-    var $wikiElem = document.getElementById('#wiki-links');
-    $wikiElem.text("");
+var GetWiki = function (query) {
+    var wikiElem = document.getElementById('wiki-links');
+    wikiElem.innerHTML = ("");
     var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
                        + query 
                        + "&format=json&callback=wikiCallback");
 
     var wikiRequestTimeout = setTimeout(function() {
-        $wikiElem.text("failed to get wikipedia resources");
+        wikiElem.innerHTML = ("failed to get wikipedia resources");
     }, 8000);
 
     $.ajax({
@@ -122,13 +122,15 @@ var GetWiki = function (name, query) {
         dataType: 'jsonp',
         // jsonp: 'callback'
         success: function( response ) {
-            var articleList = response[1];
+            console.log(response);
+            var articleList = response;
+            console.log(response);
 
             for (var i = 0; i < articleList.length; i++) {
                 articleStr = articleList[i];
                 var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-                $wikiElem.append('<li><a target="_blank" href="' + url + '">'
-                                 + articleStr + '</a></li>');
+                wikiElem.innerHTML +=('<li id="wiki-l"><a id="wiki-a" target="_blank" href="' + url + '">'
+                                 + url + '</a></li>');
 
             };
 
@@ -183,6 +185,7 @@ var Place = function (locations, vm) {
 
         // update current location
         vm.currentLocation(marker);
+
     }, this);
 
     this.marker.addListener('mouseover', function() {
@@ -307,8 +310,15 @@ var ViewModel = function () {
     this.showWiki = ko.observable(false);
 
     this.toggleWiki = function () {
-        this.showWiki(!this.showWiki());
+        self.showWiki(!self.showWiki());
+        GetWiki(self.currentLocation().title);
     };
+
+    // close wiki modal
+    google.maps.event.addListener(map, "click", function(event) {
+        self.showWiki(false);
+    });
+
 
     // trigger marker click, when list item is clicked
     this.triggerMarker = function (place) {

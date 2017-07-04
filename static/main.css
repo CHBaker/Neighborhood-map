@@ -143,9 +143,9 @@ html, body {
 #wiki-container {
 	position: absolute;
 	border-radius: 40px;
-	background-color: rgba(226, 250, 250, .8);
+	background-color: rgba(226, 250, 250, .97);
 	z-index: 1;
-	left: 885px;
+	left: 485px;
 	top: 45px;
 	height: 550px;
 	width: 350px;
@@ -156,14 +156,67 @@ html, body {
     transition: all 1s ease;
 }
 
+#wiki-btn {
+	margin-bottom: 13px;
+	margin-left: 20%;
+	font-size: 13;
+}
+
+#wiki-title {
+	padding-top: 20px;
+	text-align: center;
+	color: #318D8D;
+}
+
+#close {
+	cursor: pointer;
+    margin-left: 15px;
+    border: .5px solid;
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 15px;
+    color: #585858;
+}
+
+#wiki-links {
+	color: #318D8D;
+	width: 270px;
+	height: 450px;
+	word-wrap: break-word;
+	overflow: scroll;
+}
+
+#wiki-a {
+	color: #318D8D;
+}
+
+#wiki-l {
+	padding-top: 15px;
+}
+
 #m-title {
 	text-align: center;
 	padding: 10px;
 	font-size: 20px;
 }
 
-#wiki-a {
-	cursor: pointer;
-	text-align: center;
-	font-size: 18px;
+@media (max-width: 500px) {
+  #container {
+    max-width: 275px;
+  }
+
+  #wiki-container {
+  	max-width: 275px;
+  	left: 12%;
+  }
+
+  #wiki-links {
+	width: 212px;
+}
+
+  #wiki-btn {
+  	font-size: 11px;
+  }
 }

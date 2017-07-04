@@ -47,11 +47,15 @@
 
         <div id="wiki-container" class="hideWikiBox" data-bind="css: { showWikiBox: showWiki }">
             
-            <h3>Related Wikipedia Articles</h3>
+            <h3 id="wiki-title">
 
-            <ul>
+                Related Wikipedia Articles
 
-            </ul>
+                <span id="close" data-bind="click: toggleWiki">X</span>
+
+            </h3>
+
+            <ul id="wiki-links"></ul>
 
         </div>
 
@@ -63,7 +67,7 @@
                 
             </div>
             
-            <button id="wiki-a" data-bind="click: toggleWiki">
+            <button id="wiki-btn" data-bind="click: toggleWiki">
 
                 Wikipedia Articles
 
