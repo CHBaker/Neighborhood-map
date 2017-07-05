@@ -55,7 +55,11 @@
 
             </h3>
 
-            <ul id="wiki-links"></ul>
+            <ul id="wiki-links" data-bind="foreach: newWikiList">
+                
+                <li id="wiki-l"><a id="wiki-a" target="_blank" data-bind="text: $data, attr: { href: $data }"></a></li>
+
+            </ul>
 
         </div>
 
@@ -77,12 +81,13 @@
 
         </script>
 
-        <!-- google maps api -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDn2hH0rhRKwoo2SMnWnp5egjVcqrNMeSg&v=3&callback=appInit">
-        </script>
         <script src="js/libs/knockout-3.2.0.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="js/script.js"></script>
+        <!-- google maps api -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyDn2hH0rhRKwoo2SMnWnp5egjVcqrNMeSg&v=3&callback=appInit" 
+        onerror="mapError()">
+        </script>
 
     </body>
 

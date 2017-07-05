@@ -1,3 +1,8 @@
+// handle google map load failure
+mapError = function () {
+    document.write('Google Maps has failed to load');
+}
+
 var infoWindow;
 
 var locations = [
@@ -107,14 +112,14 @@ var mapstyle = [
 
 // Wikipedia articles function
 var GetWiki = function (query) {
-    var wikiElem = document.getElementById('wiki-links');
-    wikiElem.innerHTML = ("");
+    
+    var wikiList = [];
     var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
                        + query 
                        + "&format=json&callback=wikiCallback");
 
     var wikiRequestTimeout = setTimeout(function() {
-        wikiElem.innerHTML = ("failed to get wikipedia resources");
+        wikiList.push("failed to get wikipedia resources");
     }, 8000);
 
     $.ajax({
@@ -122,21 +127,19 @@ var GetWiki = function (query) {
         dataType: 'jsonp',
         // jsonp: 'callback'
         success: function( response ) {
-            console.log(response);
             var articleList = response;
-            console.log(response);
 
             for (var i = 0; i < articleList.length; i++) {
                 articleStr = articleList[i];
                 var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-                wikiElem.innerHTML +=('<li id="wiki-l"><a id="wiki-a" target="_blank" href="' + url + '">'
-                                 + url + '</a></li>');
+                wikiList.push(url);
 
             };
 
             clearTimeout(wikiRequestTimeout);
         }
     });
+    return wikiList;
 }
 
 // model
@@ -308,10 +311,21 @@ var ViewModel = function () {
 
     // show and hide wiki article container
     this.showWiki = ko.observable(false);
+    this.newWikiList = ko.observableArray([]);
 
     this.toggleWiki = function () {
         self.showWiki(!self.showWiki());
-        GetWiki(self.currentLocation().title);
+        // initiate get wiki
+        var wikiList = GetWiki(self.currentLocation().title);
+        console.log(wikiList);
+        self.newWikiList([]);
+
+        wikiList.forEach( function (wiki) {
+            console.log("copied" + wiki)
+            self.newWikiList().push(wiki);
+        });
+
+        console.log(self.newWikiList());
     };
 
     // close wiki modal
