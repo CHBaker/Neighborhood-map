@@ -3,6 +3,9 @@ mapError = function () {
     document.write('Google Maps has failed to load');
 }
 
+// global access to the vm
+var vm;
+
 var infoWindow;
 
 var locations = [
@@ -112,14 +115,12 @@ var mapstyle = [
 
 // Wikipedia articles function
 var GetWiki = function (query) {
-    
-    var wikiList = [];
     var wikiURL = ("https://en.wikipedia.org/w/api.php?action=opensearch&search="
                        + query 
                        + "&format=json&callback=wikiCallback");
 
     var wikiRequestTimeout = setTimeout(function() {
-        wikiList.push("failed to get wikipedia resources");
+        vm.wikiList().push("failed to get wikipedia resources");
     }, 8000);
 
     $.ajax({
@@ -132,14 +133,15 @@ var GetWiki = function (query) {
             for (var i = 0; i < articleList.length; i++) {
                 articleStr = articleList[i];
                 var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-                wikiList.push(url);
+                vm.wikiList().push(url);
+                console.log('wiki add' + url)
 
             };
+            console.log('liiiist' + vm.wikiList());
 
             clearTimeout(wikiRequestTimeout);
         }
     });
-    return wikiList;
 }
 
 // model
@@ -311,22 +313,16 @@ var ViewModel = function () {
 
     // show and hide wiki article container
     this.showWiki = ko.observable(false);
-    this.newWikiList = ko.observableArray([]);
+    this.wikiList = ko.observableArray([]);
 
     this.toggleWiki = function () {
         self.showWiki(!self.showWiki());
-        // initiate get wiki
+        // initiate get wiki, empty list
+        self.wikiList([]);
         var wikiList = GetWiki(self.currentLocation().title);
-        console.log(wikiList);
-        self.newWikiList([]);
-
-        wikiList.forEach( function (wiki) {
-            console.log("copied" + wiki)
-            self.newWikiList().push(wiki);
-        });
-
-        console.log(self.newWikiList());
+        console.log('full list' + this.wikiList());
     };
+
 
     // close wiki modal
     google.maps.event.addListener(map, "click", function(event) {
@@ -341,7 +337,8 @@ var ViewModel = function () {
 };
 
 appInit = function () {
-    ko.applyBindings(new ViewModel());
+    vm = new ViewModel()
+    ko.applyBindings(vm);
 };
 
 // animations with Jquery
