@@ -119,10 +119,6 @@ var GetWiki = function (query) {
                        + query 
                        + "&format=json&callback=wikiCallback");
 
-    var wikiRequestTimeout = setTimeout(function() {
-        vm.wikiList().push("failed to get wikipedia resources");
-    }, 8000);
-
     $.ajax({
         url: wikiURL,
         dataType: 'jsonp',
@@ -133,14 +129,13 @@ var GetWiki = function (query) {
             for (var i = 0; i < articleList.length; i++) {
                 articleStr = articleList[i];
                 var url = 'https://en.wikipedia.org/wiki/' + articleStr;
-                vm.wikiList().push(url);
-                console.log('wiki add' + url)
-
+                vm.wikiList.push(url);
             };
-            console.log('liiiist' + vm.wikiList());
-
-            clearTimeout(wikiRequestTimeout);
         }
+    }).done(function (data) {
+        console.log("GetWiki successful");
+    }).fail(function (jqXHR, textStatus) {
+        vm.wikiList.push("failed to get wikipedia resources");
     });
 }
 
@@ -320,7 +315,6 @@ var ViewModel = function () {
         // initiate get wiki, empty list
         self.wikiList([]);
         var wikiList = GetWiki(self.currentLocation().title);
-        console.log('full list' + this.wikiList());
     };
 
 
