@@ -14,8 +14,11 @@
     N/A
        
 # OPERATING INSTRUCTIONS
-    This app is easy to use, click locations, filter places,
-    look at wiki articles.
+    
+    - Menu opens on click, list of places are clickable and bring up the map marker with info window
+    - Clicking map marker highlights list item
+    - Search bar filters list and map markers
+    - Info window Wiki button reveals a modal with relating Wikipedia Articles
     
 # FILE MANIFEST
     Index.html
